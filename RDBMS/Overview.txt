@@ -1,0 +1,43 @@
+SQL> set serveroutput on
+SQL> set define on
+SQL> set verify off
+
+----------------------------Create Commands------------------------------
+
+CREATE TABLE Books
+(
+    b_no NUMBER(4) PRIMARY KEY,
+    b_name VARCHAR(40) NOT NULL,
+    a_name VARCHAR(15),
+    b_stock NUMBER(2) CHECK(b_stock >= 0)
+);
+
+CREATE TABLE Students
+(
+    st_id NUMBER(4) PRIMARY KEY,
+    st_name CHAR(15) NOT NULL,
+    st_institute VARCHAR(20),
+    st_type CHAR(4) NOT NULL CHECK(st_type IN ('paid', 'free')),
+    st_cno CHAR(10) UNIQUE
+);
+
+CREATE TABLE Faculty
+(
+    f_id NUMBER(2) PRIMARY KEY,
+    f_name CHAR(15) NOT NULL,
+    f_dept CHAR(10),
+    f_desg CHAR(10)
+);
+
+CREATE TABLE Books_issued
+(
+    b_id REFERENCES Books(b_no),
+    st_id REFERENCES Students(st_id)
+);
+
+CREATE TABLE Pending_fines
+(
+    st_id REFERENCES Students(st_id),
+    amount NUMBER(5) NOT NULL,
+    Reason VARCHAR(50)
+);
